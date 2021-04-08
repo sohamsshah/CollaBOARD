@@ -1,12 +1,10 @@
 import React from 'react'
 import {useEffect} from "react"
-import io from 'socket.io-client';
 import "./Board.css"
 
-function Board() {
+function Board({socket}) {
     let timeout;
-    let socket = io.connect('http://localhost:5000', {transports: ['websocket']});;
-
+    useEffect(() => 
     socket.on("annotation-data", (data) => {
         console.log("hello")
         let image = new Image();
@@ -18,6 +16,8 @@ function Board() {
         image.src = data;
     })
 
+    )
+    
     useEffect(() => {
         drawOnCanvas();
     })
