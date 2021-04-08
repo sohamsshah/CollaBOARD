@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import "./Playground.css"
 import Board from "./../Board/Board"
 import io from 'socket.io-client';
@@ -11,7 +11,17 @@ function useQuery() {
 function Playground() {
     const socket = io.connect('http://localhost:5000', {transports: ['websocket']});
     let query = useQuery();
-    console.log(query.get("username"), query.get("room"))
+    const username=query.get("username");
+    const room = query.get("room");
+    useEffect(() => {
+        socket.emit('joinRoom', { username, room });
+        socket.on('roomUsers', ({ room, users }) => {
+        console.log(room, users);
+        });
+        socket.on('message', (message) => {
+            console.log(message);
+        })
+    })
     return (
         <div className="container">
             <div className="color-picker-container">
