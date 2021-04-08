@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
+const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users')
 
 // init
 const app = express();
